@@ -1,0 +1,113 @@
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #0f0f0f;
+  background-color: #f6f6f6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+}
+
+.container {
+  max-width: 360px;
+  margin: 0 auto;
+  padding: 32px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.time-display {
+  font-size: 3.5rem;
+  font-weight: 300;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 2px;
+}
+
+.time-input {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.time-input .error {
+  margin: 0;
+  color: #c62828;
+  font-size: 0.85rem;
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+}
+
+input,
+button {
+  border-radius: 8px;
+  border: 1px solid #d0d0d0;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-family: inherit;
+  color: #0f0f0f;
+  background-color: #ffffff;
+  outline: none;
+}
+
+input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+button {
+  cursor: pointer;
+  font-weight: 500;
+}
+
+button:hover:not(:disabled) {
+  border-color: #396cd8;
+}
+
+button:active:not(:disabled) {
+  background-color: #e8e8e8;
+}
+
+button:disabled,
+input:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: #f6f6f6;
+    background-color: #2f2f2f;
+  }
+
+  input,
+  button {
+    color: #f6f6f6;
+    background-color: #0f0f0f98;
+    border-color: #444;
+  }
+
+  button:active:not(:disabled) {
+    background-color: #0f0f0f69;
+  }
+
+  .time-input .error {
+    color: #ef9a9a;
+  }
+}

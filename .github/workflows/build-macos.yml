@@ -1,0 +1,52 @@
+name: Build macOS
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build frontend
+        run: npm run build
+
+      - name: Build .app bundle
+        run: npm run tauri build
+
+      - name: Verify bundle size < 10 MB
+        run: |
+          APP=$(ls -d src-tauri/target/release/bundle/macos/*.app | head -1)
+          SIZE=$(du -sk "$APP" | cut -f1)
+          echo "Bundle size: ${SIZE} KB"
+          if [ "$SIZE" -ge 10240 ]; then
+            echo "Bundle exceeds 10 MB (spec: bundle nhỏ gọn)" >&2
+            exit 1
+          fi
+
+      - name: Upload .app artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Countdown-macos
+          path: src-tauri/target/release/bundle/macos/*.app
